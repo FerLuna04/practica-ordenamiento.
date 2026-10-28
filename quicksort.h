@@ -1,9 +1,9 @@
 #ifndef QUICKSORT_H
 #define QUICKSORT_H
 
-#incluide <vector>
-#incluide <string>
+#include <vector>
+#include <string>
 
-void quicksort(std::vector<std::string>& v, int bajo, int alto);
+void quickSort(std::vector<std::string>& v, int bajo, int alto);
 
 #endif
