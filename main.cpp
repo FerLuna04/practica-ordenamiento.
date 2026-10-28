@@ -2,9 +2,15 @@
 #include <fstream>
 #include <vector>
 #include <string>
+
+#include <chrono>
+#include <cstdlib>
+#include <ctime>
+#include "quickSort.h"
 using namespace std;
 
 int main() {
+    srand(time(0));
     vector<string> palabras;
     ifstream archivo("dataset.txt");
     
@@ -23,6 +29,12 @@ archivo.close();
 
 
 cout << "Palabras leidas: " << palabras.size() << endl;
+auto inicio = chrono::high_resolution_clock::now();
+quickSort(palabras, 0, (int)palabras.size() - 1);
+auto fin = chrono::high_resolution_clock::now();
+
+chrono::duration<double, milli> duracion = fin - inicio;
+cout << "Tiempo QuickSort: " << duracion.count() << " ms" << endl;
 return 0;
 
 
