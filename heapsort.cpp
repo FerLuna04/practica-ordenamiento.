@@ -17,7 +17,7 @@ static void heapify(vector<string>& v, int n, int i) {
     }
 }
 
-void heapSort(vector<string>& v) {
+void heapSort(std::vector<std::string>& v){
     int n = (int)v.size();
 
  // Construir el heap (reorganizar el vector)
