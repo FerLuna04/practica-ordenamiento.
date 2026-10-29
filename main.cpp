@@ -80,6 +80,17 @@ for (size_t i = 1; i < paraHeap.size(); i++) {
     }
 }
 cout << "HeapSort ordenado correctamente: " << (ordenadoHeap ? "SI" : "NO") << endl;
+// Estimacion de memoria de HeapSort
+size_t memoriaVectorHeap = paraHeap.size() * sizeof(string);
+size_t memoriaExtraHeap = 0;
+for (size_t i = 0; i < paraHeap.size(); i++) {
+    if (paraHeap[i].capacity() > 15) {
+        memoriaExtraHeap += paraHeap[i].capacity() + 1;
+    }
+}
+cout << "HeapSort - Memoria del vector: " << memoriaVectorHeap / 1024 << " KB" << endl;
+cout << "HeapSort - Memoria extra (palabras largas): " << memoriaExtraHeap / 1024 << " KB" << endl;
+cout << "HeapSort - Memoria total aprox: " << (memoriaVectorHeap + memoriaExtraHeap) / 1024 << " KB" << endl;
 return 0;
 
 
