@@ -6,7 +6,8 @@
 #include <chrono>
 #include <cstdlib>
 #include <ctime>
-#include "quickSort.h"
+#include "quicksort.h"
+#include "heapsort.h"
 using namespace std;
 
 int main() {
@@ -29,6 +30,8 @@ archivo.close();
 
 
 cout << "Palabras leidas: " << palabras.size() << endl;
+
+vector<string> paraHeap = palabras;   // copia desordenada para HeapSort
 auto inicio = chrono::high_resolution_clock::now();
 quickSort(palabras, 0, (int)palabras.size() - 1);
 auto fin = chrono::high_resolution_clock::now();
@@ -61,6 +64,22 @@ cout << "Tiempo QuickSort: " << duracion.count() << " ms" << endl;
     cout << "Memoria del vector: " << memoriaVector / 1024 << " KB" << endl;
     cout << "Memoria extra (palabras largas): " << memoriaExtra / 1024 << " KB" << endl;
     cout << "Memoria total aprox: " << (memoriaVector + memoriaExtra) / 1024 << " KB" << endl;
+
+
+auto inicioHeap = chrono::high_resolution_clock::now();
+heapSort(paraHeap);
+auto finHeap = chrono::high_resolution_clock::now();
+
+chrono::duration<double, milli> duracionHeap = finHeap - inicioHeap;
+cout << "Tiempo HeapSort: " << duracionHeap.count() << " ms" << endl;
+bool ordenadoHeap = true;
+for (size_t i = 1; i < paraHeap.size(); i++) {
+    if (paraHeap[i - 1] > paraHeap[i]) {
+        ordenadoHeap = false;
+        break;
+    }
+}
+cout << "HeapSort ordenado correctamente: " << (ordenadoHeap ? "SI" : "NO") << endl;
 return 0;
 
 
