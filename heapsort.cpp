@@ -16,3 +16,13 @@ static void heapify(vector<string>& v, int n, int i) {
         heapify(v, n, mayor);
     }
 }
+
+void heapSort(vector<string>& v) {
+    int n = (int)v.size();
+
+ // Construir el heap (reorganizar el vector)
+    for (int i = n / 2 - 1; i >= 0; i--){
+        heapify(v, n, i);
+   }
+}
+
