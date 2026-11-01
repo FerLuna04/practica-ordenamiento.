@@ -1,4 +1,4 @@
-# Práctica I – Ordenamiento de un dataset grande (C++)
+# Práctica II – Ordenamiento de un dataset grande (C++)
 
 **ST0245 – Estructuras de Datos y Algoritmos** · Universidad EAFIT
 
