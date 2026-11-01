@@ -2,7 +2,7 @@
 #include <random>
 #include <utility>
 using namespace std;
-
+ 
 static mt19937 rng(12345);  // semilla fija -> corridas reproducibles
 
 // Para subarreglos pequenos la insercion es mas rapida que seguir recursando
