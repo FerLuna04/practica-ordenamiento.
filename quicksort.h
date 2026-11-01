@@ -3,7 +3,7 @@
 
 #include <string>
 #include <vector>
-
+ 
 // QuickSort sobre std::vector<std::string>, ordena v[bajo..alto] (inclusive).
 // Pivote aleatorio + particion de 3 vias + recursion solo sobre la mitad menor
 // (profundidad de pila garantizada O(log n)).
