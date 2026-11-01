@@ -1,0 +1,52 @@
+﻿Palabras leidas: 100000 | corridas por algoritmo: 5
+Dataset ya ordenado de antemano? NO (aleatorio)
+
+=== Verificacion ===
+QuickSort ordenado : SI
+HeapSort  ordenado : SI
+AVL       ordenado : SI
+Las 3 salidas son identicas: SI
+
+Primeras 10 palabras ordenadas:
+  a
+  aahing
+  aaliis
+  aaronite
+  aarrgh
+  aas
+  ababua
+  abacas
+  abactor
+  abaculus
+Ultimas 3 palabras:
+  zythum
+  zyzomys
+  zyzzogeton
+
+=== Memoria estimada ===
+sizeof(string)=32 B | sizeof(AVLNode)=56 B | altura AVL=20 (log2 n = 16, cota 1.44*log2(n) ~ 23)
+Datos base (vector<string>): 3225 KB
+
+=== Comparacion (n = 100000) ===
+Algoritmo       Complejidad tiempo        Espacio aux.      Min (ms)   Prom (ms)      Mem (KB)
+----------------------------------------------------------------------------------------------
+QuickSort       O(n log n) prom / O(n^2)  O(log n)             38.12       39.50          3228
+HeapSort        O(n log n) siempre        O(1)                 47.53       49.55          3225
+AVL + inorder   O(n log n) siempre        O(n)                 34.02       35.64         10357
+
+Mas rapido (prom): AVL + inorder | Mas lento: HeapSort (1.39x)
+Menor memoria: HeapSort
+
+=== Analisis (tendencias tipicas; contrastar con la tabla de arriba) ===
+1) Las tres estrategias son O(n log n); lo que cambia son las constantes. QuickSort recorre
+   el arreglo de forma secuencial (buena localidad de cache) y hace pocas comparaciones.
+2) HeapSort salta entre i, 2i+1, 2i+2 (peor localidad) y hace ~2 comparaciones por nivel en
+   sift-down; suele perder frente a QuickSort, pero garantiza O(n log n) en el peor caso con
+   O(1) de memoria auxiliar.
+3) El AVL reparte n nodos sueltos con punteros (cache misses), hace n inserciones con
+   rotaciones y copia todo en el inorder. Es el que mas memoria usa: nodo (clave + 2
+   punteros + altura) + malloc por nodo + vector de salida.
+4) Teoria vs practica: Big O oculta constantes, jerarquia de memoria y asignaciones dinamicas.
+5) Uso recomendado: QuickSort para ordenar un arreglo una sola vez; HeapSort si se exige
+   peor caso garantizado con memoria minima; AVL si ademas se necesitan inserciones,
+   busquedas y borrados dinamicos manteniendo el orden.
