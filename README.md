@@ -20,7 +20,7 @@ No se usa `std::sort` ni ninguna función de ordenamiento de la librería están
 - Liceth Fernanda Luna Cañizales
 
 ## Estructura del repositorio
-
+ 
 ```
 practica-ordenamiento/
 ├── main.cpp              # Programa principal: mide, verifica y compara los 3 métodos
