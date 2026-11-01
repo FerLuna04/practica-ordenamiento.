@@ -8,30 +8,34 @@
 #include <ctime>
 #include "quicksort.h"
 #include "heapsort.h"
+#include "avltree.h"
 using namespace std;
 
 int main() {
     srand(time(0));
     vector<string> palabras;
     ifstream archivo("dataset.txt");
-    
+
     if (!archivo.is_open()) {
         cout << "No se pudo abrir dataset.txt" << endl;
         return 1;
     }
 
+    // Lee las palabras del dataset
     string linea;
     while (getline(archivo, linea)) {
         if (!linea.empty()) {
         palabras.push_back(linea);
     }
  }
-archivo.close();
+ archivo.close();
 
 
 cout << "Palabras leidas: " << palabras.size() << endl;
 
 vector<string> paraHeap = palabras;   // copia desordenada para HeapSort
+
+// ==================== QuickSort ====================
 auto inicio = chrono::high_resolution_clock::now();
 quickSort(palabras, 0, (int)palabras.size() - 1);
 auto fin = chrono::high_resolution_clock::now();
@@ -66,6 +70,7 @@ cout << "Tiempo QuickSort: " << duracion.count() << " ms" << endl;
     cout << "Memoria total aprox: " << (memoriaVector + memoriaExtra) / 1024 << " KB" << endl;
 
 
+// ==================== HeapSort ====================
 auto inicioHeap = chrono::high_resolution_clock::now();
 heapSort(paraHeap);
 auto finHeap = chrono::high_resolution_clock::now();
@@ -91,7 +96,69 @@ for (size_t i = 0; i < paraHeap.size(); i++) {
 cout << "HeapSort - Memoria del vector: " << memoriaVectorHeap / 1024 << " KB" << endl;
 cout << "HeapSort - Memoria extra (palabras largas): " << memoriaExtraHeap / 1024 << " KB" << endl;
 cout << "HeapSort - Memoria total aprox: " << (memoriaVectorHeap + memoriaExtraHeap) / 1024 << " KB" << endl;
+
+
+// ==================== AVL Tree ====================
+cout << endl << "=== AVL Tree ===" << endl;
+
+// Lee otra copia desordenada del dataset para el arbol AVL
+vector<string> paraAvl;
+{
+    ifstream archAvl("dataset.txt");
+    string linea;
+    while (getline(archAvl, linea)) {
+        if (!linea.empty()) {
+            paraAvl.push_back(linea);
+        }
+    }
+    archAvl.close();
+}
+
+AVLTree arbol;
+auto inicioAvl = chrono::high_resolution_clock::now();
+for (const auto& w : paraAvl) {
+    arbol.insert(w);   // inserta cada palabra manteniendo el arbol balanceado
+}
+auto finInsercion = chrono::high_resolution_clock::now();
+
+vector<string> ordenAvl = arbol.inorder();   // recorrido inorder da orden alfabetico
+auto finAvl = chrono::high_resolution_clock::now();
+
+chrono::duration<double, milli> durInsercion = finInsercion - inicioAvl;
+chrono::duration<double, milli> durInorder = finAvl - finInsercion;
+chrono::duration<double, milli> durTotalAvl = finAvl - inicioAvl;
+
+cout << "Tiempo insercion AVL: " << durInsercion.count() << " ms" << endl;
+cout << "Tiempo inorder AVL: " << durInorder.count() << " ms" << endl;
+cout << "Tiempo total AVL: " << durTotalAvl.count() << " ms" << endl;
+
+bool ordenadoAvl = true;
+for (size_t i = 1; i < ordenAvl.size(); i++) {
+    if (ordenAvl[i - 1] > ordenAvl[i]) {
+        ordenadoAvl = false;
+        break;
+    }
+}
+cout << "AVL ordenado correctamente: " << (ordenadoAvl ? "SI" : "NO") << endl;
+cout << "Palabras en AVL: " << ordenAvl.size() << endl;
+
+cout << "Primeras 10 palabras AVL:" << endl;
+for (int i = 0; i < 10 && i < (int)ordenAvl.size(); i++) {
+    cout << ordenAvl[i] << endl;
+}
+
+// Estimacion de memoria AVL
+size_t memoriaNodos = arbol.nodeCount() * sizeof(AVLNode);
+size_t memoriaExtraAvl = 0;
+for (size_t i = 0; i < ordenAvl.size(); i++) {
+    if (ordenAvl[i].capacity() > 15) {
+        memoriaExtraAvl += ordenAvl[i].capacity() + 1;
+    }
+}
+cout << "sizeof(AVLNode): " << sizeof(AVLNode) << " bytes" << endl;
+cout << "Memoria nodos AVL: " << memoriaNodos / 1024 << " KB" << endl;
+cout << "Memoria extra strings AVL: " << memoriaExtraAvl / 1024 << " KB" << endl;
+cout << "Memoria total aprox AVL: " << (memoriaNodos + memoriaExtraAvl) / 1024 << " KB" << endl;
+
 return 0;
-
-
 }
