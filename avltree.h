@@ -12,7 +12,7 @@ struct AVLNode {
     int height;        // altura del nodo
 
     AVLNode(const std::string& k);
-    ~AVLNode();
+    // Sin destructor propio: AVLTree::destroy() libera los nodos (evita doble free)
 };
 
 // Arbol balanceado AVL
@@ -29,6 +29,9 @@ public:
 
     // Cantidad de nodos insertados
     size_t nodeCount() const;
+
+    // Altura del arbol (cota AVL: <= 1.44*log2(n+2))
+    int treeHeight() const;
 
 private:
     AVLNode* root;
