@@ -1,4 +1,4 @@
-# Práctica II – Ordenamiento de un dataset grande (C++)
+# Práctica I – Ordenamiento de un dataset grande (C++)
 
 **ST0245 – Estructuras de Datos y Algoritmos** · Universidad EAFIT
 
@@ -31,29 +31,23 @@ practica-ordenamiento/
 ├── generar_dataset.cpp   # Genera dataset.txt a partir de words_alpha.txt
 ├── dataset.txt           # 100.000 palabras aleatorias (entrada de los 3 algoritmos)
 ├── resultados.txt        # Salida de ejemplo de una ejecución
-├── Makefile
 └── informe.md            # Resumen del informe (el informe completo está en el .docx)
 ```
 
 ## Requisitos
 
 - Compilador de C++ con soporte para C++17 (se probó con `g++` en MSYS2/Windows 11).
-- `make` (opcional; también se puede compilar a mano).
 
 ## Compilar
 
-Con `make`:
-
-```bash
-make
-```
-
-Esto genera los ejecutables `practica` (el programa principal) y `generar_dataset`.
-
-Sin `make`:
-
 ```bash
 g++ -O2 -std=c++17 -Wall -Wextra main.cpp quicksort.cpp heapsort.cpp avltree.cpp -o practica
+```
+
+Para el generador de datasets (opcional):
+
+```bash
+g++ -O2 -std=c++17 generar_dataset.cpp -o generar_dataset
 ```
 
 > En Windows el ejecutable se llama `practica.exe`. Compila y ejecuta en comandos separados: si los pegas juntos, `g++` puede fallar con el error *"input file is the same as output file"*.
